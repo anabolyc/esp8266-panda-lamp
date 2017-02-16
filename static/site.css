@@ -1,0 +1,39 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.div-bulb {
+    font-size: 60vh;
+    cursor: pointer;
+}
+
+.div-caption {
+    text-transform: capitalize;
+    font-size: 10vh;
+    color: #555;
+}
+
+.state-offline {
+    color: #333;
+    cursor: not-allowed;  
+} 
+
+.state-on {
+    color: orange;
+    text-shadow: 0px 0px 15vh yellow;
+}
+
+.state-off {
+    color: grey;
+}
+
+.state-switching-on {
+    color: darkorange;
+}
+
+.state-switching-off {
+    color: grey;
+    text-shadow: 0px 0px 15vh yellow;
+}

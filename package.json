@@ -1,7 +1,7 @@
 {
-  "name": "imdb_parse_web_app",
+  "name": "panda_lamp_web_app",
   "version": "1.0.0",
-  "description": "Imdp parsing app",
+  "description": "Front End for app controlling lamp over wifi using ESP8266 controller",
   "author": "Andrey Malyshenko <andrey.malyshenko@gmail.com>",
   "main": "server.js",
   "scripts": {
