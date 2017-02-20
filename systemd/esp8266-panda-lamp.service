@@ -1,0 +1,19 @@
+[Unit]
+Description=dockerized esp8266-panda-lamp
+Requires=docker.service                                                                                                          $
+After=docker.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker rm -f esp8266-panda-lamp-instance
+ExecStartPre=-/usr/bin/docker pull andreymalyshenko/esp8266-panda-lamp:armhf
+ExecStart=/usr/bin/docker run --name esp8266-panda-lamp-instance --env ESP_HOST=http://192.168.1.92:8080 -p 8086:5000 andreymalyshenko/esp8266-panda-lamp:armhf 
+ExecStartPost=/bin/sh -c 'while ! docker ps | grep esp8266-panda-lamp-instance ; do sleep 1; done'
+ExecStop=/usr/bin/docker rm -f esp8266-panda-lamp-instance
+TimeoutSec=0
+RemainAfterExit=no
+Restart=Always
+
+[Install]
+WantedBy=multi-user.target
+
+

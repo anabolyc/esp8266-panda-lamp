@@ -5,7 +5,7 @@
   "author": "Andrey Malyshenko <andrey.malyshenko@gmail.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js host=ESP_HOST"
   },
   "dependencies": {
     "express": "^4.13.3",
