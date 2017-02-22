@@ -5,7 +5,8 @@
   "author": "Andrey Malyshenko <andrey.malyshenko@gmail.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js host=ESP_HOST"
+    "start": "node server.js host=ESP_HOST",
+    "debug": "node server.js host=http://192.168.1.92:8080"
   },
   "dependencies": {
     "express": "^4.13.3",

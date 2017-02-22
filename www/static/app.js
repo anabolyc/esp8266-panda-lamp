@@ -12,6 +12,11 @@
             SWITCHING_OFF: "switching-off"
         }
 
+        var config = {
+            refreshInterval: 2000,
+            failInterval: 3000
+        };
+
         self.pub = {
             state: consts.OFFLINE,
         };
@@ -54,12 +59,13 @@
             });
         };
 
-        var updateStatus = function() {
-            console.log("Update status");
+        (updateStatus = function() {
+            console.log("Updating status");
             $http({
                 method: 'GET',
                 url: '/state'
             }).then(function successCallback(response) {
+                console.log("...got response", response);
                 if (self.pub.state !== consts.SWITCHING_ON && self.pub.state !== consts.SWITCHING_OFF && response.data.hasOwnProperty('state'))
                 {
                     if (response.data.state)
@@ -67,14 +73,12 @@
                     else
                         self.pub.state = consts.OFF;
                 }
+                window.setTimeout(updateStatus, config.refreshInterval);
             }, function errorCallback(response) {
+                console.log("...request failed", response);
                 self.pub.state = consts.OFFLINE;
+                window.setTimeout(updateStatus, config.failInterval);
             });
-        };
-
-        (function() {
-            updateStatus();
-            window.setInterval(updateStatus, 1000);
         })();
 
     }]);
