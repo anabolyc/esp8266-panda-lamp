@@ -1,12 +1,8 @@
 FROM armhf/node:6.9.1-slim
 
 # required packages
-#RUN apt-get update 
-#RUN apt-get install sqlite3 jq curl -y
-#RUN apt-get install python build-essential -y
-
-# prepare database
-#COPY ./data/db.sql /var/db.sql
+RUN apt-get update 
+RUN apt-get install cron wget -y
 
 # data script
 #COPY ./data/request_data /usr/sbin/request_data
@@ -20,14 +16,11 @@ WORKDIR /www
 RUN npm install
 
 # cleanup
-#RUN apt-get purge python build-essential -y
-#RUN apt-get autoremove -y
-#RUN rm -rf /var/lib/apt/lists/*
-
-# db folder
-#RUN mkdir /data
+RUN apt-get autoremove -y
+RUN rm -rf /var/lib/apt/lists/*
 
 ENV ESP_HOST http://localhost:8080
+
 # site data 
 # at later step to optimize build
 COPY ./www/server.js /www/
