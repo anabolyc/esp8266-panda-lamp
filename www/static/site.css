@@ -17,7 +17,6 @@ body {
 
 .state-offline {
     color: #333;
-    cursor: not-allowed;  
 } 
 
 .state-on {

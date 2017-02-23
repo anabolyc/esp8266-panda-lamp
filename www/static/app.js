@@ -22,9 +22,9 @@
         };
 
         self.bulbClick = function() {
-            console.log("Click!");
             switch (self.pub.state) {
                 case consts.OFFLINE:
+                    toggle();
                     break;
                 case consts.ON:
                     off();
@@ -36,25 +36,51 @@
         };
         
         var on = function() {
+            console.log("Sending ON request");
             self.pub.state = consts.SWITCHING_ON;
             $http({
                 method: 'POST',
                 url: '/on'
             }).then(function successCallback(response) {
+                console.log("...got response from ON request", response);
                 self.pub.state = consts.ON;
             }, function errorCallback(response) {
+                console.log("...ON request failed", response);
                 self.pub.state = consts.OFFLINE;
             });
         };
 
         var off = function() {
+            console.log("Sending OFF request");
             self.pub.state = consts.SWITCHING_OFF;
             $http({
                 method: 'POST',
                 url: '/off'
             }).then(function successCallback(response) {
+                console.log("...got response from OFF request", response);
                 self.pub.state = consts.OFF;
             }, function errorCallback(response) {
+                console.log("...OFF request failed", response);
+                self.pub.state = consts.OFFLINE;
+            });
+        };
+
+        var toggle = function() {
+            console.log("Sending TOGGLE request");
+            $http({
+                method: 'POST',
+                url: '/toggle'
+            }).then(function successCallback(response) {
+                console.log("...got response from TOGGLE request", response);
+                if (response.data.hasOwnProperty('state'))
+                {
+                    if (response.data.state)
+                        self.pub.state = consts.ON;
+                    else
+                        self.pub.state = consts.OFF;
+                }
+            }, function errorCallback(response) {
+                console.log("...TOGGLE request failed", response);
                 self.pub.state = consts.OFFLINE;
             });
         };
@@ -65,7 +91,7 @@
                 method: 'GET',
                 url: '/state'
             }).then(function successCallback(response) {
-                console.log("...got response", response);
+                console.log("...got UPDATE response", response);
                 if (self.pub.state !== consts.SWITCHING_ON && self.pub.state !== consts.SWITCHING_OFF && response.data.hasOwnProperty('state'))
                 {
                     if (response.data.state)
@@ -75,7 +101,7 @@
                 }
                 window.setTimeout(updateStatus, config.refreshInterval);
             }, function errorCallback(response) {
-                console.log("...request failed", response);
+                console.log("...UPDATE request failed", response);
                 self.pub.state = consts.OFFLINE;
                 window.setTimeout(updateStatus, config.failInterval);
             });
